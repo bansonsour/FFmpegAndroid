@@ -146,7 +146,7 @@ public class AudioHandleActivity extends AppCompatActivity implements View.OnCli
                 break;
             case 1://剪切
                 String cutFile = PATH + File.separator + "cut.mp3";
-                srcFile =  PATH + File.separator + "test1.aac";
+                //srcFile =  PATH + File.separator + "test1.aac";
                 commandLine = FFmpegUtil.cutAudio(srcFile, 5, 15, cutFile);
                 break;
             case 2://合并，支持MP3、AAC、AMR等，不支持PCM裸流，不支持WAV（PCM裸流加音频头）

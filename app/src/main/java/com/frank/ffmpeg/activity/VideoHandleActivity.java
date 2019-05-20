@@ -29,6 +29,7 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
     private static final String PATH = CommonUtil.getVideoRootPath();
     private static final String srcFile = PATH + File.separator + "hello.mp4";
     private static final String appendVideo = PATH + File.separator + "test.mp4";
+    private static final String IMG_PATH = CommonUtil.getImgRootPath();
     private ProgressBar progress_video;
 
     @SuppressLint("HandlerLeak")
@@ -216,7 +217,7 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                 if (!FileUtil.checkFileExist(srcFile)){
                     return;
                 }
-                String screenShot = PATH + File.separator + "screenShot.jpg";
+                String screenShot = IMG_PATH + File.separator + "screenShot.jpg";
                 String size = "1080x720";
                 commandLine = FFmpegUtil.screenShot(srcFile, size, screenShot);
                 break;
@@ -225,7 +226,7 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 //1、图片
-                String photo = PATH + File.separator + "launcher.png";
+                String photo = IMG_PATH + File.separator + "launcher.png";
                 String photoMark = PATH + File.separator + "photoMark.mp4";
                 commandLine = FFmpegUtil.addWaterMark(appendVideo, photo, photoMark);
                 //2、文字
@@ -240,7 +241,7 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                 if (!FileUtil.checkFileExist(srcFile)){
                     return;
                 }
-                String Video2Gif = PATH + File.separator + "Video2Gif.gif";
+                String Video2Gif = IMG_PATH + File.separator + "Video2Gif.gif";
                 int gifStart = 30;
                 int gifDuration = 5;
                 commandLine = FFmpegUtil.generateGif(srcFile, gifStart, gifDuration, Video2Gif);
@@ -253,12 +254,12 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                 break;
             case 7://图片合成视频
                 //图片所在路径，图片命名格式img+number.jpg
-                String picturePath = PATH + File.separator + "img/";
+                String picturePath = IMG_PATH + File.separator + "img/";
                 if (!FileUtil.checkFileExist(picturePath)){
                     return;
                 }
                 String combineVideo = PATH + File.separator + "combineVideo.mp4";
-                commandLine = FFmpegUtil.pictureToVideo(picturePath, combineVideo);
+                commandLine = FFmpegUtil.pictureToVideoH264(picturePath, combineVideo);
                 break;
             case 8://视频解码播放
                 startActivity(new Intent(VideoHandleActivity.this, VideoPlayerActivity.class));
@@ -291,14 +292,14 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                 if (!FileUtil.checkFileExist(srcFile)){
                     return;
                 }
-                String imagePath = PATH + File.separator + "Video2Image/";//图片保存路径
+                String imagePath = IMG_PATH + File.separator + "Video2Image/";//图片保存路径
                 File imageFile = new File(imagePath);
                 if (!imageFile.exists()){
                     imageFile.mkdir();
                 }
-                int mStartTime = 10;//开始时间
-                int mDuration = 20;//持续时间（注意开始时间+持续时间之和不能大于视频总时长）
-                int mFrameRate = 10;//帧率（从视频中每秒抽多少帧）
+                int mStartTime = 5;//开始时间
+                int mDuration = 5;//持续时间（注意开始时间+持续时间之和不能大于视频总时长）
+                int mFrameRate = 5;//帧率（从视频中每秒抽多少帧）
                 commandLine = FFmpegUtil.videoToImage(srcFile, mStartTime, mDuration, mFrameRate, imagePath);
                 break;
             case 13://两个视频合成画中画

@@ -217,6 +217,22 @@ public class FFmpegUtil {
     }
 
     /**
+     * 使用ffmpeg命令行进行图片合成视频
+     * @param srcFile 源文件
+     * @param targetFile 目标文件(mpg格式)
+     * @return 合成的视频文件
+     */
+    @SuppressLint("DefaultLocale")
+    public static  String[] pictureToVideoH264(String srcFile, String targetFile){
+        //-f image2：代表使用image2格式，需要放在输入文件前面
+        String combineVideo = "ffmpeg -threads 2 -y -f image2 -r 1 -pix_fmt yuv420p -i %simg#d.jpg -vcodec libx264 %s -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\"";
+        combineVideo = String.format(combineVideo, srcFile, targetFile);
+        combineVideo = combineVideo.replace("#", "%");
+        Log.i("VideoHandleActivity", "combineVideo=" + combineVideo);
+        return combineVideo.split(" ");//以空格分割为字符串数组
+    }
+
+    /**
      * 音频编码
      * @param srcFile 源文件pcm裸流
      * @param targetFile 编码后目标文件
@@ -293,7 +309,7 @@ public class FFmpegUtil {
         //-ss：开始时间，单位为秒
         //-t：持续时间，单位为秒
         //-r：帧率，每秒抽多少帧
-        String toImage = "ffmpeg -i %s -ss %s -t %s -r %s %s";
+        String toImage = "ffmpeg -threads 2 -y -i %s -ss %s -t %s -r %s %s";
         toImage = String.format(Locale.CHINESE, toImage, inputFile, startTime, duration, frameRate, targetFile);
         toImage = toImage + "%3d.jpg";
         return toImage.split(" ");
@@ -311,7 +327,7 @@ public class FFmpegUtil {
      */
     @SuppressLint("DefaultLocale")
     public static  String[] picInPicVideo(String inputFile1, String inputFile2, int x, int y, String targetFile){
-        String reverseVideo = "ffmpeg -i %s -i %s -filter_complex overlay=%d:%d %s";
+        String reverseVideo = "ffmpeg -threads 2 -y -i %s -i %s -filter_complex overlay=%d:%d %s";
         reverseVideo = String.format(reverseVideo, inputFile1, inputFile2, x, y, targetFile);
         return reverseVideo.split(" ");
     }

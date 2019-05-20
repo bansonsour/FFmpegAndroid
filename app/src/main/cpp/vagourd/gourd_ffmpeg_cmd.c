@@ -36,6 +36,17 @@ static void av_log_callback_print(void *ptr, int level, const char *fmt, va_list
     }
 }
 
+//Output FFmpeg's av_log()
+void custom_log_write_file(void *ptr, int level, const char* fmt, va_list vl){
+    av_log_callback_print(ptr, level, fmt, vl);
+    FILE *fp=fopen("/storage/emulated/0/FFmpegAndroid/av_log.txt","a+");
+    if(fp){
+        vfprintf(fp,fmt,vl);
+        fflush(fp);
+        fclose(fp);
+    }
+}
+
 JNIEXPORT jint JNICALL Java_com_frank_ffmpeg_FFmpegCmd_processCmd(JNIEnv *env, jclass obj, jobjectArray commands) {
     int argc = (*env)->GetArrayLength(env, commands);
     char **argv = (char **) malloc(argc * sizeof(char *));
@@ -48,7 +59,7 @@ JNIEXPORT jint JNICALL Java_com_frank_ffmpeg_FFmpegCmd_processCmd(JNIEnv *env, j
         strcpy(argv[i], temp);
         (*env)->ReleaseStringUTFChars(env, jstr, temp);
     }
-    av_log_set_callback(av_log_callback_print);
+    av_log_set_callback(custom_log_write_file);
     //执行ffmpeg命令
     result = run(argc, argv);
     //释放内存
@@ -84,7 +95,6 @@ JNIEXPORT jint JNICALL Java_com_frank_ffmpeg_FFmpegCmd_processConfig(JNIEnv *env
                 break;
         }
         sprintf(info, "%s %10s\n", info, c_temp->name);
-        strcat(info, c_temp->name);
         c_temp = c_temp->next;
     }
     LOGE("Codecs info=: %s", info);
