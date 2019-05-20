@@ -6,6 +6,13 @@
 cmake_minimum_required(VERSION 3.4.1)
 set(distribution_DIR ${CMAKE_SOURCE_DIR}/../../../../libs)
 
+add_library(libmp3lame
+                STATIC
+                IMPORTED)
+set_target_properties(libmp3lame
+                        PROPERTIES IMPORTED_LOCATION
+                        ../../../../libs/armeabi-v7a/libmp3lame.a)
+
 add_library(faac
              STATIC
              IMPORTED)
@@ -39,7 +46,7 @@ add_library(live
 find_library( log-lib
               log )
 
-target_link_libraries(live x264 faac rtmp
+target_link_libraries(live x264 faac rtmp libmp3lame
                        -landroid
                        -ljnigraphics
                        ${log-lib} )

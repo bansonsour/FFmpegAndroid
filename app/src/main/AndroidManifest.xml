@@ -61,6 +61,9 @@
         <activity android:name=".activity.VideoReverseActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <!-- 视频处理 -->
+        <activity android:name=".activity.FFmpegConfigActivity" />
     </application>
 
 </manifest>

@@ -29,7 +29,11 @@ add_library( # Sets the name of the library.
              src/main/cpp/ffmpeg_pusher.cpp
              src/main/cpp/AVpacket_queue.c
              src/main/cpp/media_player.c
-             src/main/cpp/video_filter.c)
+             src/main/cpp/video_filter.c
+
+             src/main/cpp/vagourd/gourd_ffmpeg_cmd.c
+
+        )
 
 add_library( ffmpeg
              SHARED

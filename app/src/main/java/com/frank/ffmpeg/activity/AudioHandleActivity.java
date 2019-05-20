@@ -14,6 +14,7 @@ import java.io.File;
 import com.frank.ffmpeg.AudioPlayer;
 import com.frank.ffmpeg.FFmpegCmd;
 import com.frank.ffmpeg.R;
+import com.frank.ffmpeg.util.CommonUtil;
 import com.frank.ffmpeg.util.FFmpegUtil;
 import com.frank.ffmpeg.util.FileUtil;
 
@@ -25,8 +26,8 @@ import com.frank.ffmpeg.util.FileUtil;
 public class AudioHandleActivity extends AppCompatActivity implements View.OnClickListener{
 
     private final static String TAG = AudioHandleActivity.class.getSimpleName();
-    private final static String PATH = Environment.getExternalStorageDirectory().getPath();
-    private String srcFile = PATH + File.separator + "tiger.mp3";
+    private final static String PATH = CommonUtil.getAudioRootPath();
+    private String srcFile = PATH + File.separator + "tiger1.mp3";
     private String appendFile = PATH + File.separator + "test.mp3";
     private final static int MSG_BEGIN = 11;
     private final static int MSG_FINISH = 12;
@@ -145,7 +146,8 @@ public class AudioHandleActivity extends AppCompatActivity implements View.OnCli
                 break;
             case 1://剪切
                 String cutFile = PATH + File.separator + "cut.mp3";
-                commandLine = FFmpegUtil.cutAudio(srcFile, 10, 15, cutFile);
+                srcFile =  PATH + File.separator + "test1.aac";
+                commandLine = FFmpegUtil.cutAudio(srcFile, 5, 15, cutFile);
                 break;
             case 2://合并，支持MP3、AAC、AMR等，不支持PCM裸流，不支持WAV（PCM裸流加音频头）
                 if (!FileUtil.checkFileExist(appendFile)){

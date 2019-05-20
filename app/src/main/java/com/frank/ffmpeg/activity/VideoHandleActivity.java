@@ -14,9 +14,11 @@ import android.widget.ProgressBar;
 import com.frank.ffmpeg.FFmpegCmd;
 import com.frank.ffmpeg.R;
 import com.frank.ffmpeg.format.VideoLayout;
+import com.frank.ffmpeg.util.CommonUtil;
 import com.frank.ffmpeg.util.FFmpegUtil;
 import com.frank.ffmpeg.util.FileUtil;
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class VideoHandleActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -24,7 +26,7 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
     private static final int MSG_BEGIN = 101;
     private static final int MSG_FINISH = 102;
 
-    private static final String PATH = Environment.getExternalStorageDirectory().getPath();
+    private static final String PATH = CommonUtil.getVideoRootPath();
     private static final String srcFile = PATH + File.separator + "hello.mp4";
     private static final String appendVideo = PATH + File.separator + "test.mp4";
     private ProgressBar progress_video;
@@ -190,23 +192,25 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                 commandLine = FFmpegUtil.cutVideo(srcFile, startTime, duration, cutVideo);
                 break;
             case 2://视频合并
-//                commandLine = FFmpegUtil.toTs(srcFile, ts1);
-//                concatStep ++;
-//                String concatVideo = PATH + File.separator + "concatVideo.mp4";
-//                String appendVideo = PATH + File.separator + "test.mp4";
-//                File concatFile = new File(PATH + File.separator + "fileList.txt");
-//                try {
-//                    FileOutputStream fileOutputStream = new FileOutputStream(concatFile);
-//                    fileOutputStream.write(("file \'" + srcFile + "\'").getBytes());
-//                    fileOutputStream.write("\n".getBytes());
-//                    fileOutputStream.write(("file \'" + appendVideo + "\'").getBytes());
-//                    fileOutputStream.flush();
-//                    fileOutputStream.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//
-//                commandLine = FFmpegUtil.concatVideo(srcFile, concatFile.getAbsolutePath(), concatVideo);
+                /*
+                commandLine = FFmpegUtil.toTs(srcFile, ts1);
+                concatStep ++;
+                String concatVideo = PATH + File.separator + "concatVideo.mp4";
+                String appendVideo = PATH + File.separator + "test.mp4";
+                File concatFile = new File(PATH + File.separator + "fileList.txt");
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(concatFile);
+                    fileOutputStream.write(("file \'" + srcFile + "\'").getBytes());
+                    fileOutputStream.write("\n".getBytes());
+                    fileOutputStream.write(("file \'" + appendVideo + "\'").getBytes());
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                commandLine = FFmpegUtil.concatVideo(srcFile, concatFile.getAbsolutePath(), concatVideo);
+                */
                 break;
             case 3://视频截图
                 if (!FileUtil.checkFileExist(srcFile)){
@@ -242,10 +246,10 @@ public class VideoHandleActivity extends AppCompatActivity implements View.OnCli
                 commandLine = FFmpegUtil.generateGif(srcFile, gifStart, gifDuration, Video2Gif);
                 break;
             case 6://屏幕录制
-//                String screenRecord = PATH + File.separator + "screenRecord.mp4";
-//                String screenSize = "320x240";
-//                int recordTime = 10;
-//                commandLine = FFmpegUtil.screenRecord(screenSize, recordTime, screenRecord);
+                String screenRecord = PATH + File.separator + "screenRecord.mp4";
+                String screenSize = "320x240";
+                int recordTime = 10;
+                commandLine = FFmpegUtil.screenRecord(screenSize, recordTime, screenRecord);
                 break;
             case 7://图片合成视频
                 //图片所在路径，图片命名格式img+number.jpg

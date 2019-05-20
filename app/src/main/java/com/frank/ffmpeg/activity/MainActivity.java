@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
+        findViewById(R.id.btn_ffmpeg).setOnClickListener(this);
         findViewById(R.id.btn_audio).setOnClickListener(this);
         findViewById(R.id.btn_video).setOnClickListener(this);
         findViewById(R.id.btn_media).setOnClickListener(this);
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reverse://视频倒播
                 intent.setClass(MainActivity.this, VideoReverseActivity.class);
+                break;
+            case R.id.btn_ffmpeg://音频处理
+                intent.setClass(MainActivity.this, FFmpegConfigActivity.class);
                 break;
             default:
                 break;

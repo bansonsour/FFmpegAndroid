@@ -316,4 +316,19 @@ public class FFmpegUtil {
         return reverseVideo.split(" ");
     }
 
+    public static  String[] ffmpegCodecs(){
+        String reverseVideo = "ffmpeg -codecs";
+        return reverseVideo.split(" ");
+    }
+
+    public static  String[] ffmpegFormats(){
+        String reverseVideo = "ffmpeg -formats";
+        return reverseVideo.split(" ");
+    }
+
+    public static  String[] ffmpegFilters(){
+        String reverseVideo = "ffmpeg -filters";
+        return reverseVideo.split(" ");
+    }
+
 }
